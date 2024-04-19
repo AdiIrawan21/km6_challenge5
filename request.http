@@ -1,0 +1,105 @@
+### Penanganan End Point untuk Users
+
+### create data users beserta dengan profile nya
+# POST http://localhost:3000/api/v1/users
+# Content-Type: application/json
+
+# {
+#     "name": "Adi",
+#     "email": "adi@gmail.com",
+#     "password": "adi123",
+#     "identity_type": "KTP",
+#     "identity_number": "098745623",
+#     "address": "Tangerang Selatan"
+# }
+
+### menampilkan data users
+GET http://localhost:3000/api/v1/users
+
+
+### menampilkan detail data users by id beserta dengan profile nya
+GET http://localhost:3000/api/v1/users/14
+
+### edit data users by id beserta profile nya
+PUT http://localhost:3000/api/v1/users/1
+Content-Type: application/json
+
+{
+    "name": "Anggi",
+    "email": "anggi@gmail.com",
+    "password": "anggi123",
+    "identity_type": "Passport",
+    "identity_number": "12349987619",
+    "address": "Kabupaten Tangerang"
+}
+
+### delete data users by id
+DELETE http://localhost:3000/api/v1/users/3
+
+### Penanganan End Point untuk Accounts
+
+### create accounts dengan users yang sudah terdaftar
+POST http://localhost:3000/api/v1/accounts
+Content-Type: application/json
+
+{
+    "users_id": 2,
+    "bank_name": "BCA",
+    "bank_account_number" : "718209876",
+    "balance": 600000
+}
+
+### menampilkan daftar accounts
+GET http://localhost:3000/api/v1/accounts
+
+### menampilkan detail accounts
+GET http://localhost:3000/api/v1/accounts/2
+
+### delete data accounts by id
+DELETE http://localhost:3000/api/v1/accounts/1
+
+### Penanganan End Point untuk Transactions
+
+### create transaction
+POST http://localhost:3000/api/v1/transactions
+Content-Type: application/json
+
+{
+    "source_account_id": 1,
+    "destination_account_id": 2,
+    "amount": 400000
+}
+
+### menampilkan daftar transaksi
+GET http://localhost:3000/api/v1/transactions
+
+
+### menampilkan detail trannsaksi (pengirim dan penerima)
+GET http://localhost:3000/api/v1/transactions/1
+
+### delete data transactions by id
+DELETE http://localhost:3000/api/v1/transactions/3
+
+### Penanganan Endpoint Auth register
+POST http://localhost:3000/api/v1/register
+Content-Type: application/json
+
+{
+    "name": "sabrina",
+    "email": "sabrina@gmail.com",
+    "password": "sabrina123"
+}
+
+###
+POST http://localhost:3000/api/v1/login
+Content-Type: application/json
+
+{
+    "email": "sabrina@gmail.com",
+    "password": "sabrina123"
+}
+
+
+### Cek token authenticate
+GET http://localhost:3000/api/v1/authenticate
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsIm5hbWUiOiJzYWJyaW5hIiwiZW1haWwiOiJzYWJyaW5hQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJHgzMUIzRC5NNHpKaEg2VEpFM0tEWS5NWUdVQ2tjQmhIUGlzTlJ6RlRlcUN1QW5MOWUvV0FlIiwiaWF0IjoxNzEzNTIxNTgwfQ.PCUDZ5KKqVUm46pEuHSoac3Vw5GbEu1hU46_dE0EojU

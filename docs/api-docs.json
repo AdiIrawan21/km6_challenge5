@@ -1,0 +1,663 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "API Banking-System Sederhana",
+        "description": "Daftar API Banking-System Chapter 5",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1",
+            "description": "localhost"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Daftar users"
+        },
+        {
+            "name": "Accounts",
+            "description": "Daftar Accounts"
+        },
+        {
+            "name": "Transactions",
+            "description": "Daftar Transaksi"
+        },
+        {
+            "name": "Authentications",
+            "description": "Register and login"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get all users",
+                "description": " ",
+                "parameters": [
+                    {
+                        "required": false,
+                        "in": "query",
+                        "name": "search",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Create Users",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "Unique email address",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "identity_type": {
+                                        "type": "string"
+                                    },
+                                    "identity_number": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "identity_type",
+                                    "identity_number",
+                                    "address"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created users successfully"
+                    },
+                    "400": {
+                        "description": "Email has already used"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/users/{userId}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get users by id with profiles",
+                "description": "",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "userId",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Users ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "Users not found"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update users by id",
+                "description": "",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "userId",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Users ID"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "Unique email address",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "identity_type": {
+                                        "type": "string"
+                                    },
+                                    "identity_number": {
+                                        "type": "string"
+                                    },
+                                    "address": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "identity_type",
+                                    "identity_number",
+                                    "address"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "updated users successfully"
+                    },
+                    "404": {
+                        "description": "users not found"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Delete users by id",
+                "description": " ",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "userId",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Users ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted users successfully"
+                    },
+                    "404": {
+                        "description": "Users not found"
+                    }
+                }
+            }
+        },
+        "/accounts": {
+            "get": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Get all accounts",
+                "description": " ",
+                "parameters": [
+                    {
+                        "required": false,
+                        "in": "query",
+                        "name": "search",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Create Accounts",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "users_id": {
+                                        "type": "integer"
+                                    },
+                                    "bank_name": {
+                                        "type": "string"
+                                    },
+                                    "bank_account_number": {
+                                        "type": "string"
+                                    },
+                                    "balance": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "users_id",
+                                    "bank_name",
+                                    "bank_account_number",
+                                    "balance"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Added Accounts Successfully"
+                    },
+                    "400": {
+                        "description": "Accounts or accounts number already exists"
+                    }
+                }
+            }
+        },
+        "/accounts/{accountId}": {
+            "get": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Get accounts by id",
+                "description": "",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "accountId",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Accounts ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "Accounts not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Delete accounts by id",
+                "description": " ",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "accountId",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Account ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted accounts successfully"
+                    },
+                    "404": {
+                        "description": "accounts not found"
+                    }
+                }
+            }
+        },
+        "/transactions": {
+            "post": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Create Transactions",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "source_account_id": {
+                                        "type": "integer"
+                                    },
+                                    "destination_account_id": {
+                                        "type": "integer"
+                                    },
+                                    "amount": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "source_account_id",
+                                    "destination_account_id",
+                                    "amount"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Transactions Created Successfully"
+                    },
+                    "400": {
+                        "description": "SourceAccountId and DestinationAccountId not the same value!"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get all transactions",
+                "description": " ",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "not found"
+                    }
+                }
+            }
+        },
+        "/transactions/{transactionId}": {
+            "get": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Get detail transactions by id",
+                "description": "",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "transactionId",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Transactions ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success"
+                    },
+                    "404": {
+                        "description": "transactions not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Transactions"
+                ],
+                "summary": "Delete transactions by id",
+                "description": " ",
+                "parameters": [
+                    {
+                        "required": true,
+                        "in": "path",
+                        "name": "transactionId",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "description": "Transactions ID"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted transactions successfully"
+                    },
+                    "404": {
+                        "description": "Transactions not found"
+                    }
+                }
+            }
+        },
+        "/register": {
+            "post": {
+                "tags": [
+                    "Authentications"
+                ],
+                "summary": "Registered Users",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "Unique email address",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Users has been registered"
+                    },
+                    "400": {
+                        "description": "Email has already been used"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Authentications"
+                ],
+                "summary": "login Users",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "description": "User's email address"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "description": "User's password"
+                                    }
+                                },
+                                "required": [
+                                    "email",
+                                    "password"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Users has been registered"
+                    },
+                    "400": {
+                        "description": "Email has already been used"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Users": {
+                "title": "Users",
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Andi"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "andi@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "andi@123"
+                    },
+                    "identity_type": {
+                        "type": "string",
+                        "example": "Passport"
+                    },
+                    "identity_number": {
+                        "type": "string",
+                        "example": "123456789"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "Tangerang"
+                    }
+                }
+            },
+            "Accounts": {
+                "title": "Accounts",
+                "type": "object",
+                "properties": {
+                    "users_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "bank_name": {
+                        "type": "string",
+                        "example": "BCA"
+                    },
+                    "bank_account_number": {
+                        "type": "string",
+                        "example": "012345678"
+                    },
+                    "balance": {
+                        "type": "integer",
+                        "example": 600000
+                    }
+                }
+            },
+            "Transactions": {
+                "title": "Transactions",
+                "type": "object",
+                "properties": {
+                    "source_account_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "destination_account_id": {
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "amount": {
+                        "type": "integer",
+                        "example": 400000
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
