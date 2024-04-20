@@ -3,7 +3,10 @@
     "info": {
         "title": "API Banking-System Sederhana",
         "description": "Daftar API Banking-System Chapter 5",
-        "version": "1.0.0"
+        "version": "1.0.0",
+        "contact": {
+            "email": "adiirwn10@gmail.com"
+        }
     },
     "servers": [
         {
@@ -26,7 +29,7 @@
         },
         {
             "name": "Authentications",
-            "description": "Register and login"
+            "description": "Authentications Users"
         }
     ],
     "paths": {
@@ -53,64 +56,6 @@
                     },
                     "404": {
                         "description": "not found"
-                    }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Create Users",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "description": "Unique email address",
-                                        "example": "john.doe@example.com"
-                                    },
-                                    "password": {
-                                        "type": "string"
-                                    },
-                                    "identity_type": {
-                                        "type": "string"
-                                    },
-                                    "identity_number": {
-                                        "type": "string"
-                                    },
-                                    "address": {
-                                        "type": "string"
-                                    }
-                                },
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "identity_type",
-                                    "identity_number",
-                                    "address"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "created users successfully"
-                    },
-                    "400": {
-                        "description": "Email has already used"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
                     }
                 }
             }
@@ -476,17 +421,12 @@
                 }
             }
         },
-        "/register": {
+        "/auth/register": {
             "post": {
                 "tags": [
                     "Authentications"
                 ],
                 "summary": "Registered Users",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -529,17 +469,12 @@
                 }
             }
         },
-        "/login": {
+        "/auth/login": {
             "post": {
                 "tags": [
                     "Authentications"
                 ],
                 "summary": "login Users",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -566,20 +501,103 @@
                     }
                 },
                 "responses": {
-                    "201": {
-                        "description": "Users has been registered"
+                    "200": {
+                        "description": "Logged in successfully"
                     },
                     "400": {
-                        "description": "Email has already been used"
+                        "description": "invalid email or password"
                     },
                     "401": {
                         "description": "Unauthorized"
                     }
                 }
             }
+        },
+        "/auth/authenticate": {
+            "get": {
+                "tags": [
+                    "Authentications"
+                ],
+                "summary": "Authentication user",
+                "description": "",
+                "responses": {
+                    "200": {
+                        "description": "Login was successful",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "OK"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "sabrina"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "sabrina@gmail.com"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "authorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "you're un authorized!"
+                                        },
+                                        "data": {
+                                            "example": null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
         "schemas": {
             "Users": {
                 "title": "Users",
@@ -650,13 +668,6 @@
                         "example": 400000
                     }
                 }
-            }
-        },
-        "securitySchemes": {
-            "bearerAuth": {
-                "type": "http",
-                "scheme": "bearer",
-                "bearerFormat": "JWT"
             }
         }
     }

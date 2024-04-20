@@ -80,8 +80,10 @@ GET http://localhost:3000/api/v1/transactions/1
 ### delete data transactions by id
 DELETE http://localhost:3000/api/v1/transactions/3
 
+
+
 ### Penanganan Endpoint Auth register
-POST http://localhost:3000/api/v1/register
+POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
 {
@@ -91,7 +93,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/api/v1/login
+POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
 
 {
@@ -101,5 +103,5 @@ Content-Type: application/json
 
 
 ### Cek token authenticate
-GET http://localhost:3000/api/v1/authenticate
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsIm5hbWUiOiJzYWJyaW5hIiwiZW1haWwiOiJzYWJyaW5hQGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiJDJiJDEwJHgzMUIzRC5NNHpKaEg2VEpFM0tEWS5NWUdVQ2tjQmhIUGlzTlJ6RlRlcUN1QW5MOWUvV0FlIiwiaWF0IjoxNzEzNTIxNTgwfQ.PCUDZ5KKqVUm46pEuHSoac3Vw5GbEu1hU46_dE0EojU
+GET http://localhost:3000/api/v1/auth/authenticate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsIm5hbWUiOiJzYWJyaW5hIiwiZW1haWwiOiJzYWJyaW5hQGdtYWlsLmNvbSIsImlhdCI6MTcxMzU3ODI2Mn0.fTnIuSCJdZWLJZsKjbUyfJPOd61TbDpGIaatwSyCT4A

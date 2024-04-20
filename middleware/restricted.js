@@ -4,7 +4,7 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 module.exports = async (req, res, next) => {
     const { authorization } = req.headers;
 
-    if (!authorization) {
+    if (!authorization || !authorization.split(" ")[1]) {
         return res.status(401).json({
             status: false,
             message: "You're not authorized!",
@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
         });
     }
 
-    jwt.verify(authorization, JWT_SECRET_KEY, (err, decoded) => {
+    jwt.verify(authorization.split(" ")[1], JWT_SECRET_KEY, (err, user) => {
         if (err) {
             return res.status(401).json({
                 status: false,
@@ -21,8 +21,9 @@ module.exports = async (req, res, next) => {
                 data: null
             });
         }
+        delete user.iat
 
-        req.user = decoded;
+        req.user = user;
         next();
     });
 };

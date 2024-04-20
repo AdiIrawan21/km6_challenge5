@@ -1,5 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
+const bcrypt = require("bcrypt")
+
 
 module.exports = {
     // function untuk create data users
@@ -31,12 +33,13 @@ module.exports = {
                 });
             }
 
+            let encryptedPassword = await bcrypt.hash(password, 10)
             // Create data user beserta profile
             const newUser = await prisma.user.create({
                 data: {
                     name,
                     email,
-                    password,
+                    password: encryptedPassword,
                     profile: {
                         create: {
                             identity_type,
@@ -49,6 +52,7 @@ module.exports = {
                     profile: true,
                 },
             });
+            delete newUser.password
 
             return res.status(201).json({
                 status: true,
@@ -77,6 +81,7 @@ module.exports = {
                     data: []
                 });
             }
+            delete users.password
 
             res.status(200).json({
                 status: true,
@@ -117,6 +122,7 @@ module.exports = {
                     profile: true
                 }
             });
+            delete users.password
 
             res.status(200).json({
                 status: true,
@@ -158,7 +164,7 @@ module.exports = {
                     data: null
                 })
             }
-
+            let encryptedPassword = await bcrypt.hash(password, 10)
             // update data
             let updateUsers = await prisma.user.update({
                 where: {
@@ -168,7 +174,7 @@ module.exports = {
                 data: {
                     name,
                     email,
-                    password,
+                    password: encryptedPassword,
                     profile: {
                         update: {
                             identity_type,
@@ -181,7 +187,7 @@ module.exports = {
                     profile: true,
                 }
             })
-
+            delete updateUsers.password
             res.status(200).json({
                 status: true,
                 message: 'Update Data Successfully',
